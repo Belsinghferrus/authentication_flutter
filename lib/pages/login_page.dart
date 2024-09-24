@@ -1,3 +1,4 @@
+import 'package:authentication_flutter/components/my_button.dart';
 import 'package:authentication_flutter/components/my_textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,9 @@ class LoginPage extends StatelessWidget {
   //text editing controller
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+
+  //sign in user
+  void signUserIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +73,46 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 25),
 
               //sign in button
+              MyButton(
+                text: "Sign In",
+                onTap: signUserIn,
+              ),
+
+              const SizedBox(height: 50),
 
               //or continue with
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      thickness: 0.5,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'Or continue with',
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      thickness: 0.5,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ],
+              ),
 
               //google or apple
+              // Row(
+              //   children: [
+                  
+              //   ],
+              // )
 
               // not a member? register now
             ],
