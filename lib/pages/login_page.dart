@@ -1,5 +1,6 @@
 import 'package:authentication_flutter/components/my_button.dart';
 import 'package:authentication_flutter/components/my_textfield.dart';
+import 'package:authentication_flutter/components/square_tile.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -19,6 +20,7 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
                 height: 50,
@@ -107,14 +109,43 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
 
+              const SizedBox(height: 25),
               //google or apple
-              // Row(
-              //   children: [
-                  
-              //   ],
-              // )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  //google
+                  SquareTile(
+                    imagePath: 'lib/images/google.png',
+                    height: 50,
+                  ),
+                  SizedBox(width: 10),
+                  //apple
+                  SquareTile(
+                    imagePath: 'lib/images/apple.png',
+                    height: 50,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 50),
 
               // not a member? register now
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'Not a member?',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    'Register Now',
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )
             ],
           ),
         ),
