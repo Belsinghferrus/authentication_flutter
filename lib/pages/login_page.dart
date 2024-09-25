@@ -5,19 +5,72 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   //text editing controller
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
   //sign in user
   void signUserIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-    );
+    //loading circle
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+
+    //sign in
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      //pop loading
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code == 'user-not-found') {
+        print('wrong email');
+        //WRONG EMAIL
+        wrongEmailMessage();
+      } else if (e.code == 'wrong-password') {
+        //WRONG PASSWORD
+        wrongPassword();
+        // wrongPassword();
+      }
+    }
+  }
+
+  //WRONG EMAIL
+  void wrongEmailMessage() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text("Incorrect email"),
+          );
+        });
+  }
+
+  //WRONG PASSWORD
+  void wrongPassword() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text("Incorrect email"),
+          );
+        });
   }
 
   @override
@@ -65,6 +118,11 @@ class LoginPage extends StatelessWidget {
                 controller: passwordController,
               ),
               const SizedBox(height: 10),
+
+              // Padding(
+              //   padding: EdgeInsets.symmetric(vertical: 10),
+              //   child: Text("errorMessage"),
+              // ),
 
               //forgot password
               Padding(
@@ -118,9 +176,9 @@ class LoginPage extends StatelessWidget {
 
               const SizedBox(height: 25),
               //google or apple
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   //google
                   SquareTile(
                     imagePath: 'lib/images/google.png',
@@ -138,9 +196,9 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // not a member? register now
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Not a member?',
                     style: TextStyle(color: Colors.grey),
